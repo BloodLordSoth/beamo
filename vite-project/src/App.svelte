@@ -55,14 +55,7 @@
       audio: true
     })
 
-    const mimeType =
-    MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
-    ? 'audio/webm;codecs=opus'
-    : 'audio/mp4'
-
-    const extension = mimeType.includes('webm') ? 'webm' : 'mp4'
-
-    mediaRecorder = new MediaRecorder(stream, { mimeType })
+    mediaRecorder = new MediaRecorder(stream)
     chunks = []
 
     mediaRecorder.ondataavailable = (e) => {
@@ -70,10 +63,10 @@
     }
 
     mediaRecorder.onstop = async () => {
-      const blob = new Blob(chunks, { type: mimeType })
+      const blob = new Blob(chunks, { type: 'audio/webm' })
       
       const formData = new FormData()
-      formData.append('file', blob, `audio.${extension}`)
+      formData.append('file', blob, `audio.webm`)
 
       const res = await fetch('/prompt', {
         method: 'POST',
