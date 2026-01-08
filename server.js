@@ -34,7 +34,7 @@ app.post('/prompt', upload.single('file'), async (req, res, next) => {
             cache.delete(id)
         }, 50000)
         
-        res.status(200).send({text, audiourl: `http://localhost:3334/audio/${id}`})
+        res.status(200).send({text, audiourl: `/audio/${id}`})
     }
     catch (e) {
         next(e)
