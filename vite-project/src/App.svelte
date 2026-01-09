@@ -97,7 +97,7 @@
           audio.stop()
           break
         case 'Youtube':
-          window.open('http://www.pornhub.com', '_blank')
+          window.open('http://www.youtube.com', '_blank')
           data.text = ''
           break
         case 'listen':
