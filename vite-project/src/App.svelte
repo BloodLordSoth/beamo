@@ -3,6 +3,9 @@
   import kato from './assets/kato.mp3'
   import openEye from '../src/assets/eyes1.png'
   import blink from '../src/assets/blink.png'
+  import haha from '../src/assets/haha.mp3'
+  import nelson from '../src/assets/nelson.png'
+  import intro from '../src/assets/intro.mp3'
   let canvas;
   let c;
   let stream;
@@ -16,6 +19,7 @@
   let eye2 = new Image()
   eye1.src = openEye
   eye2.src = blink
+  let showNelson = false
 
   setInterval(() => {
     timer++
@@ -87,13 +91,34 @@
           audio.src = kato
           audio.volume = 0.3
           audio.play()
+          data.text = ''
           break
         case 'stop':
           audio.stop()
           break
         case 'Youtube':
-          window.open('http://www.youtube.com', '_blank')
+          window.open('http://www.pornhub.com', '_blank')
           data.text = ''
+          break
+        case 'listen':
+          audio.src = intro
+          audio.play()
+          data.text = ''
+          break
+        case 'ew, no':
+          audio.src = data.audiourl
+          audio.play()
+          setTimeout(() => {
+            showNelson = true
+            audio.src = haha
+            audio.play()
+          }, 2000)
+          setTimeout(() => {
+            showNelson = false
+          }, 4000)
+          break
+        case 'Caleb':
+          window.open('https://secure.runescape.com/m=hiscore_oldschool/hiscorepersonal?user1=F%203%20X', '_blank')
           break
         default:
           audio.src = data.audiourl
@@ -123,19 +148,22 @@
 <main>
   <audio bind:this={audio}></audio>
   <canvas bind:this={canvas} id="canvas"></canvas>
-
+  <img class:visible={showNelson} id="nelson" src={nelson} alt='nelson'/>
   <div id="container">
     {#if chattimer > 0}
     <p id="airesponse">{reply?.text}</p>
     {/if}
     <div id="btndiv">
-      <button id="btn" on:click={recordAudio}>Command</button>
-      <button id="btn" on:click={t2}>End</button>
+      <button id="btn" on:pointerdown={recordAudio} on:pointerup={t2}>Chat</button>
     </div>
   </div>
 </main>
 
 <style>
+  main {
+    display: flex;
+    flex-direction: column;
+  }
   #canvas {
     margin-top: 5vh;
     width: 70vw;
@@ -159,9 +187,27 @@
     padding: 5px;
     width: 20vw;
     height: 10vh;
-    
-    background: lightgreen;
-    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-family: monospace;
+    background: #0000;
+    border: 2px solid white;
+  }
+  #btn:hover {
+    background: #fff;
+    color: #000;
+    cursor: pointer;
+  }
+  #nelson {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 40vh;
+    left: 30vw;
+    display: none;
+  }
+  #nelson.visible {
+    display: flex;
   }
   
 
